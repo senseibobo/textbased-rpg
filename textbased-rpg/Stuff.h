@@ -6,3 +6,4 @@
 #include <type_traits>
 #include <typeinfo>
 #include <random>
+#include <functional>

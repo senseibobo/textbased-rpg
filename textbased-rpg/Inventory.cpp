@@ -42,9 +42,13 @@ void Inventory::setOwner(Entity* entity) {
 	owner = entity;
 }
 
-void Inventory::itemSelection() {
+Item* Inventory::itemSelection(const std::function<bool(Item*)>& filter) {
 	int page = 1;
-	int selectSize = std::min((int)items.size()-(page-1)*5, 5);
+	std::vector<Item*> filteredItems = std::vector<Item*>();
+	for (Item* item : items) {
+		if (filter(item)) filteredItems.push_back(item);
+	}
+	int selectSize = std::min((int)filteredItems.size()-(page-1)*5, 5);
 	int input = -1;
 
 	auto canGoToNextPage = [](int currentPage, int totalItems) -> bool {
@@ -52,9 +56,9 @@ void Inventory::itemSelection() {
 	};
 
 	while (true) {
-		selectSize = std::min((int)items.size()-(page-1)*5, 5);
+		selectSize = std::min((int)filteredItems.size()-(page-1)*5, 5);
 		displayItemsPage(page);
-		bool nextPage = canGoToNextPage(page, items.size());
+		bool nextPage = canGoToNextPage(page, filteredItems.size());
 		int nextPageInput = -1;
 		int previousPageInput = -1;
 		int si = selectSize;
@@ -75,9 +79,10 @@ void Inventory::itemSelection() {
 		else {
 			for (int i = 1; i <= selectSize; i++) {
 				if (input == i) {
-					Item* item = items[(page - 1)* 5 + i - 1];
-					std::cout << "YOU HAVE SELECTED " << item->getName() << ". WELL DONE.\n";
-					break;
+					Item* item = filteredItems[(page - 1)* 5 + i - 1];
+					return item;
+					// std::cout << "YOU HAVE SELECTED " << item->getName() << ". WELL DONE.\n";
+					// break;
 				}
 			}
 		}

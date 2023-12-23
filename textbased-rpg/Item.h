@@ -24,6 +24,7 @@ public:
 	virtual void displayInfo() const;
 	virtual void displayInlineInfo() const;
 	std::string getName();
+	Item::ItemType getType();
 	void setConsumable(bool value);
 private:
 	std::string name;

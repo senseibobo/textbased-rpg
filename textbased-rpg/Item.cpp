@@ -52,6 +52,10 @@ std::string Item::getName()
 	return name;
 }
 
+Item::ItemType Item::getType() {
+	return type;
+}
+
 void Item::setConsumable(bool value) {
 	consumable = value;
 }

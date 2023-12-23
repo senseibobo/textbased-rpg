@@ -55,13 +55,14 @@ void Game::inputLoop() {
 		std::cout << "1. Check inventory\n" <<
 			"2. Check stats\n" <<
 			"3. Acquire steroids\n" <<
-			"4. Use steroids\n" <<
+			"4. Use item\n" <<
 			"5. Quit\n" <<
-			"6. Select Item\n";
+			"6. Equip item\n";
 		i++;
 		int input = Input::getIntInput(1, 6);
 		system("cls");
 		Items::Steroids* steroids;
+		Item* item;
 		switch (input) {
 		case 1:
 			player->getInventory().displayItems();
@@ -73,14 +74,19 @@ void Game::inputLoop() {
 			player->getInventory().addItem(new Items::Steroids);
 			break;
 		case 4:
-			steroids = player->getInventory().findItem<Items::Steroids>();
-			player->getInventory().useItem(steroids);
+			item = player->getInventory().itemSelection([](Item* i1) -> bool {
+				return i1->getType() == Item::ItemType::Useable;
+				});
+			item->onUse(player);
 			break;
 		case 5:
 			gameRunning = false;
 			break;
 		case 6:
-			player->getInventory().itemSelection();
+			item = player->getInventory().itemSelection([](Item* i1) -> bool {
+				return i1->getType() == Item::ItemType::Equippable;
+				});
+			item->onEquip(player);
 			break;
 		}
 	}

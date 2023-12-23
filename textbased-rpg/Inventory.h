@@ -17,7 +17,7 @@ public:
     void displayItemsPage(int page);
     void displayItems();
     void setOwner(Entity* entity);
-    void itemSelection();
+    Item* itemSelection(const std::function<bool(Item*)>& filter);
 
     template<typename T>
     T* findItem()
