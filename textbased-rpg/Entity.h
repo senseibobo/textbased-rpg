@@ -1,31 +1,30 @@
 #pragma once
 #include "Stuff.h"
 #include "Inventory.h"
+#include "Stats.h"
+
+class Fight;
 
 class Entity
 {
 public:
 	Entity();
-	Entity(std::string name, int strength, int defense, int agility, int magic, int luck);
 	void displayStats();
 	Inventory& getInventory();
-	void increaseStrength(int amount);
-	void increaseDefense(int amount);
-	void increaseAgility(int amount);
-	void increaseMagic(int amount);
-	void increaseLuck(int amount);
-	void decreaseStrength(int amount);
-	void decreaseDefense(int amount);
-	void decreaseAgility(int amount);
-	void decreaseMagic(int amount);
-	void decreaseLuck(int amount);
-private:
+	virtual Stats& getStats();
+	virtual int getHit(int damage, Entity* source);
+	virtual int getHit(int damage);
+	virtual void onDeath(Entity* source);
+	virtual void onDeath();
+	bool isDead() const;
+	void setDead(int value);
+	void setFight(Fight* fight);
+	std::string getName() const;
+protected:
 	std::string name;
-	int strength;
-	int defense;
-	int agility;
-	int magic;
-	int luck;
 	Inventory inventory;
+	Stats stats;
+	Fight* fight; // stores nullptr if entity isn't fighting
+	bool dead;
 };
 

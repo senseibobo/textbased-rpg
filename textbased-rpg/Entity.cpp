@@ -1,66 +1,63 @@
 #include "Entity.h"
 
-Entity::Entity(std::string name, int strength, int defense, int agility, int magic, int luck):Entity() {
-	this->name = name;
-	this->strength = strength;
-	this->defense = defense;
-	this->agility = agility;
-	this->magic = magic;
-	this->luck = luck;
-}
-
 Entity::Entity() {
 	name = "[Unnamed entity]";
-	strength = 0;
-	defense = 0;
-	agility = 0;
-	magic = 0;
-	luck = 0;
+	stats = Stats();
+	dead = false;
 	inventory = Inventory();
 	inventory.setOwner(this);
 }
 
-void Entity::increaseStrength(int amount) {
-	strength += amount;
+
+int Entity::getHit(int damage, Entity* source) {
+	int damageTaken = std::max(1, damage - stats.getDefense());
+	stats.decreaseHealth(damageTaken);
+	if (stats.getHealth() <= 0) onDeath(source);
+	return damageTaken;
 }
-void Entity::increaseDefense(int amount) {
-	defense += amount;
+
+int Entity::getHit(int damage)
+{
+	return getHit(damage, nullptr);
 }
-void Entity::increaseAgility(int amount) {
-	agility += amount;
+
+void Entity::onDeath(Entity* source) {
+	onDeath();
 }
-void Entity::increaseMagic(int amount) {
-	magic += amount;
+void Entity::onDeath() {
+	dead = true;
 }
-void Entity::increaseLuck(int amount) {
-	luck += amount;
+
+bool Entity::isDead() const
+{
+	return dead;
 }
-void Entity::decreaseStrength(int amount) {
-	strength -= amount;
+
+void Entity::setDead(int value)
+{
+	dead = value;
 }
-void Entity::decreaseDefense(int amount) {
-	defense -= amount;
+
+void Entity::setFight(Fight* fight)
+{
+	this->fight = fight;
 }
-void Entity::decreaseAgility(int amount) {
-	agility -= amount;
-}
-void Entity::decreaseMagic(int amount) {
-	magic -= amount;
-}
-void Entity::decreaseLuck(int amount) {
-	luck -= amount;
+
+std::string Entity::getName() const {
+	return name;
 }
 
 void Entity::displayStats() {
-	std::cout << name << "'s stats:" <<
-		"\nStrength: " << strength <<
-		"\nDefense: " << defense <<
-		"\nAgility: " << agility <<
-		"\nMagic: " << magic <<
-		"\nLuck: " << luck << "\n";
+	std::cout << name << "'s stats:\n";
+	stats.display();
 }
 
 Inventory& Entity::getInventory()
 {
 	return inventory;
+}
+
+Stats& Entity::getStats()
+{
+	return stats;
 }

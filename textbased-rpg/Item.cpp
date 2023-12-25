@@ -5,6 +5,7 @@ Item::Item() {
 	this->type = ItemType::Equippable;
 	description = "[No description]";
 	consumable = false;
+	equipped = false;
 }
 
 Item::Item(std::string name, ItemType type, std::string description) : Item() {
@@ -13,9 +14,24 @@ Item::Item(std::string name, ItemType type, std::string description) : Item() {
 	this->description = description;
 }
 
+void Item::onEquip(Entity* entity)
+{
+	equipped = true;
+}
+
+void Item::onUnequip(Entity* entity)
+{
+	equipped = false;
+}
+
 bool Item::isConsumable() const
 {
 	return type == ItemType::Useable and consumable;
+}
+
+bool Item::isEquipped() const
+{
+	return type == ItemType::Equippable and equipped;
 }
 
 void Item::displayInfo() const {

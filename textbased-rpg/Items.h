@@ -12,12 +12,14 @@ namespace Items {
 			"Jump on your enemies (+2ST) (+4AG)"
 		) {}
 		void onEquip(Entity* entity) override {
-			entity->increaseStrength(2);
-			entity->increaseAgility(4);
+			Item::onEquip(entity);
+			entity->getStats().increaseStrength(2);
+			entity->getStats().increaseAgility(4);
 		}
 		void onUnequip(Entity* entity) override {
-			entity->decreaseStrength(2);
-			entity->decreaseAgility(4);
+			Item::onUnequip(entity);
+			entity->getStats().decreaseStrength(2);
+			entity->getStats().decreaseAgility(4);
 		}
 	};
 
@@ -31,7 +33,7 @@ namespace Items {
 			setConsumable(true);
 		}
 		void onUse(Entity* entity) override {
-			entity->increaseStrength(1);
+			entity->getStats().increaseStrength(1);
 			std::cout << "You used steroids! (+1ST) (-1BS)\n";
 		}
 	};

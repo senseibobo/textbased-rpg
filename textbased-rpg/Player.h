@@ -3,9 +3,8 @@
 class Player : public Entity
 {
 public:
-	Player(std::string name, int strength, int defense, int agility, int magic, int luck);
 	Player();
-	int rand;
+	void create();
 private:
 };
 

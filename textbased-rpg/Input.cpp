@@ -9,6 +9,7 @@ int Input::getIntInput(int min, int max) {
 			std::cout << "Wrong input. Enter a number between " << min << " and " << max << "\n";
 			continue;
 		}
+		system("cls");
 		break;
 	}
 	return n;

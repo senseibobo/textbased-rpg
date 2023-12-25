@@ -14,9 +14,13 @@ public:
     void addItem(Item* item);
     void removeItem(Item* item);
     void useItem(Item* item);
+    void equipItem(Item* item);
+    void displayItemsPage(int page, std::vector<Item*> items);
     void displayItemsPage(int page);
     void displayItems();
     void setOwner(Entity* entity);
+    bool selectEquipItem();
+    bool selectUseItem();
     Item* itemSelection(const std::function<bool(Item*)>& filter);
 
     template<typename T>
