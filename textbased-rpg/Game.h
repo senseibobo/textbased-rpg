@@ -12,6 +12,7 @@ public:
 	Player* getPlayer();
 	Fight* nextLevel();
 	void endGame();
+	void openShop();
 private:
 	Player* player;
 	void initLevelEnemies();
@@ -19,6 +20,8 @@ private:
 	void debugStuff();
 	bool gameRunning;
 	int level;
+	int gold;
 	Enemy** enemies;
+	Inventory* shop;
 };
 

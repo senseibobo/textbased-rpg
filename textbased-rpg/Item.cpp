@@ -8,10 +8,11 @@ Item::Item() {
 	equipped = false;
 }
 
-Item::Item(std::string name, ItemType type, std::string description) : Item() {
+Item::Item(std::string name, ItemType type, std::string description, int cost) : Item() {
 	this->name = name;
 	this->type = type;
 	this->description = description;
+	this->cost = cost;
 }
 
 void Item::onEquip(Entity* entity)
@@ -81,4 +82,9 @@ Item::ItemType Item::getType() {
 
 void Item::setConsumable(bool value) {
 	consumable = value;
+}
+
+int Item::getCost()
+{
+	return cost;
 }

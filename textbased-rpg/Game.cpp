@@ -2,15 +2,25 @@
 
 Game::Game()
 {
+	srand(time(0));
 	level = -1;
+	gold = 20;
 	player = new Player();
 	player->setGame(this);
 	player->getInventory()->addItem(new Items::PogoStick);
+	shop = new Inventory();
+	shop->addItem(new Items::Cigarettes());
+	shop->addItem(new Items::Cigarettes());
+	shop->addItem(new Items::Cigarettes());
+	shop->addItem(new Items::Cigarettes());
+	shop->addItem(new Items::Cigarettes());
+	shop->addItem(new Items::Cigarettes());
 	initLevelEnemies();
 
 	inputLoop();
 	
 	delete player;
+	delete shop;
 }
 
 void Game::initLevelEnemies() {
@@ -24,6 +34,25 @@ void Game::initLevelEnemies() {
 void Game::endGame() {
 	std::cout << "GAME OVER!\n";
 	gameRunning = false;
+}
+
+void Game::openShop()
+{
+	while (true) {
+		std::cout << "You have " << gold << " gold.\n";
+		Item* selectedItem = shop->itemSelection([](Item* it) { return true; });
+		if (selectedItem == nullptr) break;
+		else {
+			if (gold >= selectedItem->getCost()) {
+				gold -= selectedItem->getCost();
+				player->getInventory()->addItem(new Item(*selectedItem));
+				shop->removeItem(selectedItem);
+			}
+			else {
+				std::cout << "You don't have enough gold for that!\n";
+			}
+		}
+	}
 }
 
 Player* Game::getPlayer()
@@ -58,7 +87,7 @@ void Game::inputLoop() {
 	while (gameRunning) {
 		std::cout << "1. Check inventory\n" <<
 			"2. Check stats\n" <<
-			"3. Acquire steroids\n" <<
+			"3. Shop\n" <<
 			"4. Use item\n" <<
 			"5. Quit\n" <<
 			"6. Equip item\n" <<
@@ -78,8 +107,11 @@ void Game::inputLoop() {
 			player->displayStats();
 			break;
 		case 3:
-			player->getInventory()->addItem(new Items::Steroids);
+			openShop();
 			break;
+		/*case 3:
+			player->getInventory()->addItem(new Items::Steroids);
+			break; add steroids*/
 		case 4:
 			item = player->getInventory()->itemSelection([](Item* i1) -> bool {
 				return i1->getType() == Item::ItemType::Useable;

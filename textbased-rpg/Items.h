@@ -9,7 +9,8 @@ namespace Items {
 		PogoStick() : Item(
 			"Pogo Stick", 
 			ItemType::Equippable,
-			"Jump on your enemies (+2ST) (+4AG)"
+			"Jump on your enemies (+2ST) (+4AG)",
+			10
 		) {}
 		void onEquip(Entity* entity) override {
 			Item::onEquip(entity);
@@ -28,7 +29,8 @@ namespace Items {
 		Steroids() : Item(
 			"Steroids",
 			ItemType::Useable,
-			"Get some gains (+1ST)"
+			"Get some gains (+1ST)",
+			5
 		) {
 			setConsumable(true);
 		}
@@ -44,7 +46,8 @@ namespace Items {
 		Cigarettes() : Item(
 			"",
 			ItemType::Useable,
-			"Smoke a pack (+1LU)"
+			"Smoke a pack (+1LU)",
+			3
 		) {
 
 			name = std::string("Cigarete ");
@@ -59,6 +62,7 @@ namespace Items {
 			name += boje[rand() % 5] + " ";
 			if (rand() % 2 == 0) name += duzine[rand() % 3] + " ";
 			if (rand() % 3 == 0) name += "Slim ";
+			name = name.substr(0, name.size() - 1);
 			setConsumable(true);
 		}
 		void onUse(Entity* entity) override {

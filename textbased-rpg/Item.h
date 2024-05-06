@@ -16,7 +16,7 @@ public:
 	bool operator==(const Item* other) const { return other == this; }
 	
 	Item();
-	Item(std::string name, ItemType type, std::string description);
+	Item(std::string name, ItemType type, std::string description, int cost);
 	virtual void onEquip(Entity* entity);
 	virtual void onUnequip(Entity* entity);
 	virtual void onUse(Entity* entity);
@@ -26,14 +26,15 @@ public:
 	virtual void displayInlineInfo() const;
 	std::string getName();
 	Item::ItemType getType();
+	int getCost();
 	void setConsumable(bool value);
-	void setEquippable(bool value);
 protected:
 	std::string name;
 	std::string description;
 	ItemType type;
 	bool consumable;
 	bool equipped;
+	int cost;
 	std::string getTypeString() const;
 };
 
