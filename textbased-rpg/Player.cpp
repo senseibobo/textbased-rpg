@@ -34,7 +34,7 @@ void Player::create() {
 	case 3: s = 2; d = 3; a = 3; m = 6; l = 6; break; // Druid
 	case 4: s = 5; d = 2; a = 8; m = 2; l = 3; break; // Ninja
 	case 5: s = 4; d = 2; a = 8; m = 1; l = 5; break; // Trickster
-	case 6: s = 1; d = 1; a = 1; m = 1; l = 1; break; // John
+	case 6: s = 1; d = 1; a = 200; m = 1; l = 1; break; // John
 	}
 	this->name = name;
 	stats = Stats(10,s,d,a,m,l);

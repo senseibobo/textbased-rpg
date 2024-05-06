@@ -46,11 +46,11 @@ namespace Items {
 		Cigarettes() : Item(
 			"",
 			ItemType::Useable,
-			"Smoke a pack (+1LU)",
+			"Smoke a cigarette (-1HP) (+1LU)",
 			3
 		) {
 
-			name = std::string("Cigarete ");
+			name = std::string("Cigarettes ");
 			name += marke[rand() % 3] + " ";
 			if (rand() % 2 == 0) {
 				name += modeli[rand() % 3] + " ";
@@ -65,14 +65,22 @@ namespace Items {
 			name = name.substr(0, name.size() - 1);
 			setConsumable(true);
 		}
+		
 		void onUse(Entity* entity) override {
 			Item::onUse(entity);
+			entity->getStats().increaseLuck(1);
+			entity->getStats().decreaseHealth(1);
+			if (entity->getStats().getHealth() == 0) {
+				entity->getStats().increaseHealth(1);
+				std::cout << "You almost die from the cigarette.";
+			}
+			std::cout << "You smoke a cigarette. You feel disgusting! (-1HP) (+1LU)\n";
 		}
 	protected:
 		const std::vector<std::string> marke = { "Winston", "Marlboro", "Lucky Strike" };
 		const std::vector<std::string> modeli = { "Fine", "Extra Cut", "Compact" };
 		const std::vector<std::string> sufiksi = { "Plus", "Refined" };
 		const std::vector<std::string> duzine = { "L", "XL", "S" };
-		const std::vector<std::string> boje = { "Plavi", "Zlatni", "Crni", "Crveni", "Srebrni" };
+		const std::vector<std::string> boje = { "Blue", "Gold", "Black", "Red", "Silver" };
 	};
 }

@@ -8,13 +8,11 @@ Game::Game()
 	player = new Player();
 	player->setGame(this);
 	player->getInventory()->addItem(new Items::PogoStick);
+	player->getInventory()->addItem(new Items::Cigarettes);
 	shop = new Inventory();
-	shop->addItem(new Items::Cigarettes());
-	shop->addItem(new Items::Cigarettes());
-	shop->addItem(new Items::Cigarettes());
-	shop->addItem(new Items::Cigarettes());
-	shop->addItem(new Items::Cigarettes());
-	shop->addItem(new Items::Cigarettes());
+	shop->addItem(new Items::Steroids());
+	for(int i = 0; i < 15; i++)
+		shop->addItem(new Items::Cigarettes());
 	initLevelEnemies();
 
 	inputLoop();
@@ -45,8 +43,7 @@ void Game::openShop()
 		else {
 			if (gold >= selectedItem->getCost()) {
 				gold -= selectedItem->getCost();
-				player->getInventory()->addItem(new Item(*selectedItem));
-				shop->removeItem(selectedItem);
+				shop->moveItem(selectedItem, player->getInventory());
 			}
 			else {
 				std::cout << "You don't have enough gold for that!\n";
@@ -116,8 +113,7 @@ void Game::inputLoop() {
 			item = player->getInventory()->itemSelection([](Item* i1) -> bool {
 				return i1->getType() == Item::ItemType::Useable;
 				});
-			if(item)
-				item->onUse(player);
+			player->getInventory()->useItem(item);
 			break;
 		case 5:
 			gameRunning = false;

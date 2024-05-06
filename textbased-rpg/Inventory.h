@@ -14,6 +14,7 @@ public:
     ~Inventory();
     void addItem(Item* item);
     void removeItem(Item* item);
+    void moveItem(Item* item, Inventory* newInventory);
     void useItem(Item* item);
     void equipItem(Item* item);
     void displayItemsPage(int page, std::vector<Item*> items);

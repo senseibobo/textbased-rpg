@@ -25,7 +25,19 @@ void Inventory::removeItem(Item* item) {
 	else {
 		std::cout << "COULDN'T REMOVE ITEM: NOT FOUND!!!\n";
 	}
+}
 
+void Inventory::moveItem(Item* item, Inventory* newInventory) {
+	auto it = std::find_if(items.begin(), items.end(),
+		[item](const Item* i) { return *item == i; });
+
+	if (it != items.end()) {
+		items.erase(it);
+		newInventory->items.push_back(item);
+	}
+	else {
+		std::cout << "COULDN'T REMOVE ITEM: NOT FOUND!!!\n";
+	}
 }
 
 void Inventory::useItem(Item* item)
@@ -34,6 +46,7 @@ void Inventory::useItem(Item* item)
 	else if (item->getType() != Item::ItemType::Useable) std::cout << "Item is not useable.\n";
 	else {
 		item->onUse(owner);
+		std::cout << typeid(*item).name()<<".onUse();\n";
 		if(item->isConsumable()) removeItem(item);
 	}
 }

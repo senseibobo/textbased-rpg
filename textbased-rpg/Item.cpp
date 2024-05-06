@@ -6,6 +6,7 @@ Item::Item() {
 	description = "[No description]";
 	consumable = false;
 	equipped = false;
+	cost = 0;
 }
 
 Item::Item(std::string name, ItemType type, std::string description, int cost) : Item() {
@@ -27,9 +28,12 @@ void Item::onUnequip(Entity* entity)
 
 void Item::onUse(Entity* entity) 
 {
-	if (isConsumable()) {
+	std::cout << "Item succesfully used1\n";
+	/*if (isConsumable()) {
+		std::cout << "REMOVED";
+		std::cin >> name;
 		entity->getInventory()->removeItem(this);
-	}
+	}*/
 }
 
 bool Item::isConsumable() const
