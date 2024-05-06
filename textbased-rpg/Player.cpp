@@ -4,6 +4,16 @@ Player::Player() : Entity() {
 	create();
 }
 
+void Player::onDeath() {
+	Entity::onDeath();
+	game->endGame();
+}
+
+void Player::setGame(Game* game)
+{
+	this->game = game;
+}
+
 void Player::create() {
 	std::string name;
 	std::cout << "Enter your player name: ";

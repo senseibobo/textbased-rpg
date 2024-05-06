@@ -24,6 +24,13 @@ void Item::onUnequip(Entity* entity)
 	equipped = false;
 }
 
+void Item::onUse(Entity* entity) 
+{
+	if (isConsumable()) {
+		entity->getInventory()->removeItem(this);
+	}
+}
+
 bool Item::isConsumable() const
 {
 	return type == ItemType::Useable and consumable;

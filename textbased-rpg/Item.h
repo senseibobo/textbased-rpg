@@ -1,7 +1,7 @@
 #pragma once
-#include "Stuff.h"
-
 class Entity;
+#include "Stuff.h"
+#include "Entity.h"
 
 class Item
 {
@@ -19,7 +19,7 @@ public:
 	Item(std::string name, ItemType type, std::string description);
 	virtual void onEquip(Entity* entity);
 	virtual void onUnequip(Entity* entity);
-	virtual void onUse(Entity* entity) {};
+	virtual void onUse(Entity* entity);
 	virtual bool isConsumable() const;
 	virtual bool isEquipped() const;
 	virtual void displayInfo() const;
@@ -28,7 +28,7 @@ public:
 	Item::ItemType getType();
 	void setConsumable(bool value);
 	void setEquippable(bool value);
-private:
+protected:
 	std::string name;
 	std::string description;
 	ItemType type;

@@ -20,10 +20,10 @@ Fight::Fight(Player* player, Entity* enemy) {
 				attack(player, enemy);
 				break;
 			case 2:
-				if (!player->getInventory().selectUseItem()) continue;
+				if (!player->getInventory()->selectUseItem()) continue;
 				break;
 			case 3:
-				if (!player->getInventory().selectEquipItem()) continue;
+				if (!player->getInventory()->selectEquipItem()) continue;
 				break;
 			case 4:
 				fighting = false;
@@ -32,6 +32,7 @@ Fight::Fight(Player* player, Entity* enemy) {
 		if (!fighting) break;
 		attack(enemy, player);
 	}
+	delete this;
 }
 Fight::~Fight() {
 	player->setFight(nullptr);

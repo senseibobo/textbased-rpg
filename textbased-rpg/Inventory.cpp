@@ -4,6 +4,12 @@ Inventory::Inventory() {
 	items = std::vector<Item*>();
 }
 
+Inventory::~Inventory() {
+	for (auto& item : items) {
+		delete item;
+	}
+}
+
 void Inventory::addItem(Item* item) {
 	items.push_back(item);
 }
@@ -25,10 +31,10 @@ void Inventory::removeItem(Item* item) {
 void Inventory::useItem(Item* item)
 {
 	if (item == nullptr) std::cout << "Item not found.\n";
-	else if (!item->isConsumable()) std::cout << "Item is not consumable.\n";
+	else if (item->getType() != Item::ItemType::Useable) std::cout << "Item is not useable.\n";
 	else {
 		item->onUse(owner);
-		removeItem(item);
+		if(item->isConsumable()) removeItem(item);
 	}
 }
 

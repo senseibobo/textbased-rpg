@@ -1,4 +1,5 @@
 #pragma once
+class Inventory;
 #include "Stuff.h"
 #include "Inventory.h"
 #include "Stats.h"
@@ -9,8 +10,9 @@ class Entity
 {
 public:
 	Entity();
+	~Entity();
 	void displayStats();
-	Inventory& getInventory();
+	Inventory* getInventory();
 	virtual Stats& getStats();
 	virtual int getHit(int damage, Entity* source);
 	virtual int getHit(int damage);
@@ -22,7 +24,7 @@ public:
 	std::string getName() const;
 protected:
 	std::string name;
-	Inventory inventory;
+	Inventory* inventory;
 	Stats stats;
 	Fight* fight; // stores nullptr if entity isn't fighting
 	bool dead;

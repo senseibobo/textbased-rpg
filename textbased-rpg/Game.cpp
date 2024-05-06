@@ -2,15 +2,39 @@
 
 Game::Game()
 {
+	level = -1;
 	player = new Player();
-	player->getInventory().addItem(new Items::PogoStick);
+	player->setGame(this);
+	player->getInventory()->addItem(new Items::PogoStick);
+	initLevelEnemies();
+
 	inputLoop();
+	
 	delete player;
+}
+
+void Game::initLevelEnemies() {
+	enemies = new Enemy* [4];
+	enemies[0] = new Enemies::Wolf();
+	enemies[1] = new Enemies::Bear();
+	enemies[2] = new Enemies::Goat();
+	enemies[3] = new Enemies::Gnome();
+}
+
+void Game::endGame() {
+	std::cout << "GAME OVER!\n";
+	gameRunning = false;
 }
 
 Player* Game::getPlayer()
 {
 	return player;
+}
+
+Fight* Game::nextLevel() {
+	level += 1;
+	Fight* fight = new Fight(player, enemies[level]);
+	return fight;
 }
 
 void Game::debugStuff() { // random debug stuff
@@ -38,24 +62,26 @@ void Game::inputLoop() {
 			"4. Use item\n" <<
 			"5. Quit\n" <<
 			"6. Equip item\n" <<
-			"7. Fight a wolf\n";
+			"7. Fight a wolf\n" <<
+			"8. Next Level\n";
 		i++;
-		int input = Input::getIntInput(1, 7);
+		int input = Input::getIntInput(1, 8);
 		//system("cls");
 		Items::Steroids* steroids;
 		Item* item;
+		Fight* fight;
 		switch (input) {
 		case 1:
-			player->getInventory().displayItems();
+			player->getInventory()->displayItems();
 			break;
 		case 2:
 			player->displayStats();
 			break;
 		case 3:
-			player->getInventory().addItem(new Items::Steroids);
+			player->getInventory()->addItem(new Items::Steroids);
 			break;
 		case 4:
-			item = player->getInventory().itemSelection([](Item* i1) -> bool {
+			item = player->getInventory()->itemSelection([](Item* i1) -> bool {
 				return i1->getType() == Item::ItemType::Useable;
 				});
 			if(item)
@@ -65,14 +91,18 @@ void Game::inputLoop() {
 			gameRunning = false;
 			break;
 		case 6:
-			item = player->getInventory().itemSelection([](Item* i1) -> bool {
+			item = player->getInventory()->itemSelection([](Item* i1) -> bool {
 				return i1->getType() == Item::ItemType::Equippable;
 				});
 			if (item)
 				item->onEquip(player);
 			break;
 		case 7:
-			Fight fight = Fight(player,new Enemies::Wolf());
+			fight = new Fight(player,new Enemies::Wolf());
+			break;
+		case 8:
+			nextLevel();
+			break;
 		}
 	}
 }

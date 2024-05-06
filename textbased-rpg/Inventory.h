@@ -1,16 +1,17 @@
 #pragma once
+class Entity;
+class Item;
 #include "Stuff.h"
 #include "Item.h"
 #include "Input.h"
-#define INVENTORY_SIZE 20
+//#define INVENTORY_SIZE 20
 
-class Entity;
-class Item;
 
 class Inventory
 {
 public:
     Inventory();
+    ~Inventory();
     void addItem(Item* item);
     void removeItem(Item* item);
     void useItem(Item* item);

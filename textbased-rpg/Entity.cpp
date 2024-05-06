@@ -4,8 +4,13 @@ Entity::Entity() {
 	name = "[Unnamed entity]";
 	stats = Stats();
 	dead = false;
-	inventory = Inventory();
-	inventory.setOwner(this);
+	inventory = new Inventory();
+	inventory->setOwner(this);
+}
+
+Entity::~Entity()
+{
+	delete inventory;
 }
 
 
@@ -52,7 +57,7 @@ void Entity::displayStats() {
 	stats.display();
 }
 
-Inventory& Entity::getInventory()
+Inventory* Entity::getInventory()
 {
 	return inventory;
 }
