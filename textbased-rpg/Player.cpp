@@ -39,3 +39,4 @@ void Player::create() {
 	this->name = name;
 	stats = Stats(10,s,d,a,m,l);
 }
+

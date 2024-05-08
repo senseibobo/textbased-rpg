@@ -2,10 +2,24 @@
 class Entity;
 #include "Stuff.h"
 #include "Entity.h"
+namespace Items {
+	class PogoStick;
+	class Cigarettes;
+	class Steroids;
+}
+
+#include "Items.h"
 
 class Item
 {
 public:
+	enum class ItemClass {
+		Item,
+		PogoStick,
+		Steroids,
+		Cigarettes
+	};
+
 	enum class ItemType {
 		Useable,
 		Equippable,
@@ -24,10 +38,13 @@ public:
 	virtual bool isEquipped() const;
 	virtual void displayInfo() const;
 	virtual void displayInlineInfo() const;
+	virtual ItemClass getItemClass() const;
 	std::string getName();
 	Item::ItemType getType();
 	int getCost();
 	void setConsumable(bool value);
+	static Item* load(std::ifstream& stream);
+	void save(std::ofstream& stream);
 protected:
 	std::string name;
 	std::string description;

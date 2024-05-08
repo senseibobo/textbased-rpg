@@ -75,6 +75,11 @@ void Item::displayInlineInfo() const {
 	std::cout << "\n";
 }
 
+Item::ItemClass Item::getItemClass() const
+{
+	return ItemClass::Item;
+}
+
 std::string Item::getName()
 {
 	return name;
@@ -86,6 +91,44 @@ Item::ItemType Item::getType() {
 
 void Item::setConsumable(bool value) {
 	consumable = value;
+}
+
+Item* Item::load(std::ifstream& stream)
+{
+	Item* item;
+	ItemClass itemClass;
+	int _itemClass;
+	std::string _name;
+	bool _equipped;
+	stream >> _itemClass >> _name >> _equipped;
+	itemClass = (ItemClass)_itemClass;
+	switch (itemClass) {
+	case ItemClass::Item:
+		item = new Item();
+		break;
+	case ItemClass::PogoStick:
+		item = new Items::PogoStick();
+		break;
+	case ItemClass::Cigarettes:
+		item = new Items::Cigarettes();
+		break;
+	case ItemClass::Steroids:
+		item = new Items::Steroids();
+		break;
+	}
+	item->equipped = _equipped;
+	replace_character(_name, '_', ' ');
+	item->name = _name;
+	return item;
+}
+
+void Item::save(std::ofstream& stream)
+{
+	ItemClass itemClass = getItemClass();
+
+	std::string n2(name);
+	replace_character(n2, ' ', '_');
+	stream << (int)itemClass << " " << n2 << " " << equipped << "\n";
 }
 
 int Item::getCost()

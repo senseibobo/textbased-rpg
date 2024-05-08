@@ -24,6 +24,8 @@ public:
     bool selectEquipItem();
     bool selectUseItem();
     Item* itemSelection(const std::function<bool(Item*)>& filter);
+    static Inventory* load(std::ifstream& stream);
+    void save(std::ofstream& stream) const;
 
     template<typename T>
     T* findItem()

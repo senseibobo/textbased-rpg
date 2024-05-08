@@ -145,6 +145,26 @@ Item* Inventory::itemSelection(const std::function<bool(Item*)>& filter) {
 	}
 }
 
+Inventory* Inventory::load(std::ifstream& stream)
+{
+	int _itemCount;
+	stream >> _itemCount;
+	Inventory* inventory = new Inventory();
+	for (int i = 0; i < _itemCount; i++) {
+		Item* item = Item::load(stream);
+		inventory->addItem(item);
+	}
+	return inventory;
+}
+
+void Inventory::save(std::ofstream& stream) const
+{
+	stream << items.size() << "\n";
+	for (int i = 0; i < items.size(); i++) {
+		items[i]->save(stream);
+	}
+}
+
 void Inventory::displayItemsPage(int page, std::vector<Item*> items)
 {
 	int currentPage = 1;

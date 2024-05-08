@@ -9,6 +9,9 @@ public:
 	void onDeath();
 	void create();
 	void setGame(Game* game);
+	EntityClass getEntityClass() const override {
+		return EntityClass::Player;
+	}
 private:
 	Game* game;
 };

@@ -9,3 +9,7 @@
 #include <functional>
 #include <map>
 #include <unordered_map>
+#include <fstream>
+
+
+void replace_character(std::string& s, char c1, char c2);

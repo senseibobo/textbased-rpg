@@ -140,6 +140,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Stats.cpp" />
+    <ClCompile Include="Stuff.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemies.h" />
